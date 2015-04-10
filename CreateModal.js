@@ -33,6 +33,7 @@ function CreateModal(options) {
         title: null,
         text: null,
         textAlign: 'left',
+        width: '600px',
         ready: function(){},
         hide: function(){}
     }
@@ -48,7 +49,7 @@ function CreateModal(options) {
     
     var modalContent = '';
     
-    modalContent += ' <div class="modal-dialog"> <div class="modal-content"> <div class="modal-header">';
+    modalContent += ' <div class="modal-dialog" style="width: '+ settings.width +';"> <div class="modal-content"> <div class="modal-header">';
     modalContent += '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>';
     if (settings.title) {
         modalContent += '<h4 class="modal-title">';
