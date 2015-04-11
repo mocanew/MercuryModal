@@ -1,4 +1,4 @@
-// hide modal manually: $('#mymodal').modal('hide');
+// hide modal manually: $('#mercuryModal-' + ($('.mercuryModal').length - 1)).modal('hide');
 function MercuryModal(options) {
     var defaults = {
         id: 'mercuryModal',
@@ -30,7 +30,7 @@ function MercuryModal(options) {
     
     var modalContent = '<div class="modal fade '+ settings.id +'" id="'+ settings.id +'-'+ length +'" role="dialog" aria-labelledby="modal" aria-hidden="false" style="z-index: '+ (1050 + 10 * length) +'">';
     
-    modalContent += ' <div class="modal-dialog" style="width: '+ settings.width +';"> <div class="modal-content">';
+    modalContent += ' <div class="modal-dialog" style="max-width: '+ settings.width +';"> <div class="modal-content">';
     if(settings.header) {
         modalContent += '<div class="modal-header">';
         modalContent += '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>';
