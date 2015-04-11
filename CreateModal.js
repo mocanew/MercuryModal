@@ -14,6 +14,8 @@ function MercuryModal(options) {
             class: 'btn-danger',
             dismiss: true
         },
+        header: true,
+        footer: true,
         title: null,
         text: null,
         textAlign: 'left',
@@ -21,29 +23,32 @@ function MercuryModal(options) {
         ready: function(){},
         hide: function(){}
     }
-     
+    
     var settings = $.extend(true, defaults, options);
     
     var length = $('.' + settings.id).length;
     
     var modalContent = '<div class="modal fade '+ settings.id +'" id="'+ settings.id +'-'+ length +'" role="dialog" aria-labelledby="modal" aria-hidden="false" style="z-index: '+ (1050 + 10 * length) +'">';
     
-    modalContent += ' <div class="modal-dialog" style="width: '+ settings.width +';"> <div class="modal-content"> <div class="modal-header">';
-    modalContent += '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>';
-    if (settings.title) {
-        modalContent += '<h4 class="modal-title">';
-        modalContent += settings.title;
-        modalContent += '</h4>';
+    modalContent += ' <div class="modal-dialog" style="width: '+ settings.width +';"> <div class="modal-content">';
+    if(settings.header) {
+        modalContent += '<div class="modal-header">';
+        modalContent += '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>';
+        if (settings.title) {
+            modalContent += '<h4 class="modal-title">';
+            modalContent += settings.title;
+            modalContent += '</h4>';
+        }
+        modalContent += '</div>';
     }
-    modalContent += '</div>';
     if (settings.text) {
         modalContent += '<div class="modal-body" style="text-align: '+ settings.textAlign +';">';
         modalContent += settings.text;
         modalContent += '</div>';
-        modalContent += '<div class="modal-footer" style="text-align:center;">';
+        if(settings.footer) modalContent += '<div class="modal-footer" style="text-align:center;">';
     }
     else{
-        modalContent += '<div class="modal-footer" style="border-top:0; text-align:center;">';
+        if(settings.footer) modalContent += '<div class="modal-footer" style="border-top:0; text-align:center;">';
     }
     if (settings.leftButton.text && settings.rightButton.text) {
         modalContent += '<button type="button" id="leftbtnmodal" class="btn '+ settings.leftButton.class +'"';
