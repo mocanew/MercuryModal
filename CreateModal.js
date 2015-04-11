@@ -1,23 +1,7 @@
-var modalElement = '';
-modalElement += '<div class="modal fade" id="mymodal" role="dialog" aria-labelledby="modal" aria-hidden="false">';
-modalElement += '   <div class="modal-dialog">';
-modalElement += '       <div class="modal-content">';
-modalElement += '           <div class="modal-header">';
-modalElement += '               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>';
-modalElement += '               <h4 class="modal-title"></h4>';
-modalElement += '           </div>';
-modalElement += '           <div class="modal-body"></div>';
-modalElement += '           <div class="modal-footer">';
-modalElement += '               <button type="button" id="nobtnmodal" class="btn btn-default" data-dismiss="modal">Cancel</button>';
-modalElement += '               <button type="button" id="yesbtnmodal" class="btn btn-danger" data-dismiss="modal">Ok</button>';
-modalElement += '           </div>';
-modalElement += '       </div>';
-modalElement += '   </div>';
-modalElement += '</div>';
-
 // hide modal manually: $('#mymodal').modal('hide');
-function CreateModal(options) {
+function MercuryModal(options) {
     var defaults = {
+        id: 'mercuryModal',
         leftButton: {
             click: function(){},
             text: null,
@@ -38,16 +22,11 @@ function CreateModal(options) {
         hide: function(){}
     }
      
-    settings = $.extend(true, defaults, options);
+    var settings = $.extend(true, defaults, options);
     
-    if ($('#mymodal').length == 0) {
-        $('body').append(modalElement);
-    }    
-    var modalDiv = $('#mymodal');
+    var length = $('.' + settings.id).length;
     
-    modalDiv.unbind();
-    
-    var modalContent = '';
+    var modalContent = '<div class="modal fade '+ settings.id +'" id="'+ settings.id +'-'+ length +'" role="dialog" aria-labelledby="modal" aria-hidden="false" style="z-index: '+ (1050 + 10 * length) +'">';
     
     modalContent += ' <div class="modal-dialog" style="width: '+ settings.width +';"> <div class="modal-content"> <div class="modal-header">';
     modalContent += '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>';
@@ -101,9 +80,10 @@ function CreateModal(options) {
         modalContent += '</button>';
     }
     
-    modalContent += '</div> </div> </div>';
+    modalContent += '</div> </div> </div> </div>';
     
-    modalDiv.html(modalContent);
+    $('body').append(modalContent);
+    var modalDiv = $('#'+ settings.id +'-'+ length);
     modalDiv.modal();
     
     if (settings.rightButton.text) {
@@ -117,6 +97,14 @@ function CreateModal(options) {
         });
     }
     
-    modalDiv.on('hidden.bs.modal', settings.hide);
+    modalDiv.on('hidden.bs.modal', function(e){
+        settings.hide(e);
+        $(this).data('bs.modal', null);
+        $(this).remove();
+    });
+    
+    $($('.modal-backdrop:not(.backdrop-'+ settings.id +')')[0]).css('z-index', (1050 + 10 * (length - 1) + 1)).addClass('backdrop-'+ settings.id);
+    
     settings.ready();
+    return this;
 }
