@@ -2,18 +2,20 @@
 function MercuryModal(options) {
     var defaults = {
         id: 'mercuryModal',
-        leftButton: {
+        buttons:[
+        {
             click: function(){},
             text: null,
             class: 'btn-default',
             dismiss: true
         },
-        rightButton: {
+        {
             click: function(){},
             text: null,
             class: 'btn-danger',
             dismiss: true
-        },
+        }
+        ],
         header: true,
         footer: true,
         title: null,
@@ -27,6 +29,7 @@ function MercuryModal(options) {
     var settings = $.extend(true, defaults, options);
     
     var length = $('.' + settings.id).length;
+    var buttonsLength = $('.'+ settings.id +'-button').length;
     
     var modalContent = '<div class="modal fade '+ settings.id +'" id="'+ settings.id +'-'+ length +'" role="dialog" aria-labelledby="modal" aria-hidden="false" style="z-index: '+ (1050 + 10 * length) +'">';
     
@@ -50,40 +53,16 @@ function MercuryModal(options) {
     else{
         if(settings.footer) modalContent += '<div class="modal-footer" style="border-top:0; text-align:center;">';
     }
-    if (settings.leftButton.text && settings.rightButton.text) {
-        modalContent += '<button type="button" id="leftbtnmodal" class="btn '+ settings.leftButton.class +'"';
-
-        settings.leftButton.dismiss ? modalContent += ' data-dismiss="modal"' : modalContent += '';
-        
-        modalContent += '>';
-        modalContent +=     settings.leftButton.text;
-        modalContent += '</button>';
-        modalContent += '<button type="button" id="rightbtnmodal" class="btn '+ settings.rightButton.class +'"';
-        
-        settings.rightButton.dismiss ? modalContent += ' data-dismiss="modal"' : modalContent += '';
-        
-        modalContent += '>';
-        modalContent +=     settings.rightButton.text;
-        modalContent += '</button>';
-    }
-    else if(settings.leftButton.text){
-        modalContent += '<button type="button" id="leftbtnmodal" class="btn '+ settings.leftButton.class +'"';
-        
-        settings.leftButton.dismiss ? modalContent += ' data-dismiss="modal"' : modalContent += '';
-        
-        modalContent += '>';
-        modalContent += settings.leftButton.text;
-        modalContent += '</button>';
-    }
-    else if(settings.rightButton.text){
-        modalContent += '<button type="button" id="rightbtnmodal" class="btn '+ settings.rightButton.class +'"';
-        
-        settings.rightButton.dismiss ? modalContent += ' data-dismiss="modal"' : modalContent += '';
-        
-        modalContent += '>';
-        modalContent += settings.rightButton.text;
-        modalContent += '</button>';
-    }
+    
+    $.each(settings.buttons, function(index, value){
+        if (value.text) {
+            modalContent += '<button type="button" id="'+ settings.id +'-button-'+ (index + buttonsLength) +'" class="'+ settings.id +'-button btn '+ value.class +'"';
+            value.dismiss ? modalContent += ' data-dismiss="modal"' : modalContent += '';
+            modalContent += '>';
+            modalContent += value.text;
+            modalContent += '</button>';
+        }
+    });
     
     modalContent += '</div> </div> </div> </div>';
     
@@ -91,16 +70,15 @@ function MercuryModal(options) {
     var modalDiv = $('#'+ settings.id +'-'+ length);
     modalDiv.modal();
     
-    if (settings.rightButton.text) {
-        modalDiv.on('click', '#rightbtnmodal', function(){
-            settings.rightButton.click($(this));
-        });
-    }
-    if (settings.leftButton.text) {
-        modalDiv.on('click', '#leftbtnmodal', function(){
-            settings.leftButton.click($(this));
-        });
-    }
+    $.each(settings.buttons, function(index, value){
+        if(value.text){
+            if (typeof value.click == 'function') {
+                modalDiv.on('click', '#'+ settings.id +'-button-'+ (index + buttonsLength), function(){
+                    value.click($(this));
+                });
+            }
+        }
+    });
     
     modalDiv.on('hidden.bs.modal', function(e){
         settings.hide(e);
