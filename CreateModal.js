@@ -55,7 +55,10 @@
         
         $('body').append(modalContent);
         var modalDiv = $('#'+ settings.id +'-'+ length);
-        modalDiv.modal();
+        modalDiv.modal({
+            keyboard: settings.keyboard,
+            backdrop: settings.backdrop
+        });
 
         $.each(settings.buttons, function(index, value){
             if(value.text){
@@ -72,6 +75,11 @@
             $(this).data('bs.modal', null);
             $(this).remove();
         });
+        $('body').on('keyup', modalDiv, function(e){
+            if(e.keyCode == 27){
+                $($('.modal')[$('.modal').length - 1]).modal('hide');
+            }
+        })
         
         $($('.modal-backdrop:not(.backdrop-'+ settings.id +')')[0]).css('z-index', (1050 + 10 * (length - 1) + 1)).addClass('backdrop-'+ settings.id);
         
@@ -107,21 +115,11 @@
             footer: 'left'
         },
         width: '600px',
+        keyboard: true,
+        backdrop: true,
         ready: function(){},
         hide: function(){}
     };
-    $.MercuryModal.close = function(selector){
-        if(!selector || !selector.length) selector = $.MercuryModal.defaults.id;
-        $(selector).modal('hide');
-    }
-    $.MercuryModal.closeLast = function(selector){
-        if(!selector || !selector.length) selector = $.MercuryModal.defaults.id;
-        $('#'+ selector +'-' + ($('.'+ selector).length - 1)).modal('hide');
-    }
-    $.MercuryModal.closeAll = function(selector){
-        if(!selector || !selector.length) selector = $.MercuryModal.defaults.id;
-        $('.'+ selector).modal('hide');
-    }
 
     // Helpers
     $.fn.MercuryModal = function(options) {
