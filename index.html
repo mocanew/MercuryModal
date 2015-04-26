@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+  
+    <title>MercuryModal Demo</title>
+    <meta name="description" content="MercuryModal demo">
+    <meta name="author" content="RontavStudio">
+  
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+</head>
+
+<body ondragstart="return false;">
+    <div class="test">Lorem ipsum</div>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="CreateModal.js"></script>
+    <script>
+        $('.test').MercuryModal({
+            title: 'This message is from a div',
+            show:{
+                footer: false,
+                closeButton: false
+            }
+        });
+        var testModal = MercuryModal({
+            title: 'Test',
+            show:{
+                footer: false
+            }
+        });
+    </script>
+</body>
+</html>
