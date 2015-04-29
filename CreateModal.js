@@ -6,9 +6,10 @@
             settings.text += $(elem).html();
         }       
         var length = $('.modal').length;
+        var modalIdLength = $('.'+ settings.id).length;
         var buttonsLength = $('.'+ settings.id +'-button').length;
         
-        var modalContent = '<div class="modal fade '+ settings.id +'" id="'+ settings.id +'-'+ length +'" role="dialog" aria-labelledby="modal" aria-hidden="false" style="z-index: '+ (1050 + 10 * length) +'">';
+        var modalContent = '<div class="modal fade '+ settings.id +'" id="'+ settings.id +'-'+ modalIdLength +'" role="dialog" aria-labelledby="modal" aria-hidden="false" style="z-index: '+ (1050 + 10 * length) +'">';
         modalContent += ' <div class="modal-dialog" style="max-width: '+ settings.width +';"> <div class="modal-content">';
         if(settings.show.header) {
             modalContent += '<div class="modal-header" style="text-align: '+ settings.textAlign.header +';';
@@ -30,7 +31,7 @@
             modalContent += '</div>';
         }
         if (settings.text) {
-            modalContent += '<div class="modal-body" style="text-align: '+ settings.textAlign.middle +';">';
+            modalContent += '<div class="modal-body" style="text-align: '+ settings.textAlign.middle +'">';
             modalContent += settings.text;
             modalContent += '</div>';
             if(settings.show.footer) {
@@ -51,10 +52,10 @@
                 modalContent += '</button>';
             }
         });
-        modalContent += '</div> </div> </div> </div>';
+        modalContent += '</div></div></div></div>';
         
-        $('body').append(modalContent);
-        var modalDiv = $('#'+ settings.id +'-'+ length);
+        $(modalContent).appendTo('body');
+        var modalDiv = $('#'+ settings.id +'-'+ modalIdLength);
         modalDiv.modal({
             keyboard: settings.keyboard,
             backdrop: settings.backdrop
@@ -75,13 +76,7 @@
             $(this).data('bs.modal', null);
             $(this).remove();
         });
-        $('body').on('keyup', modalDiv, function(e){
-            if(e.keyCode == 27){
-                $($('.modal')[$('.modal').length - 1]).modal('hide');
-            }
-        })
-        
-        $($('.modal-backdrop:not(.backdrop-'+ settings.id +')')[0]).css('z-index', (1050 + 10 * (length - 1) + 1)).addClass('backdrop-'+ settings.id);
+        $($('.modal-backdrop:not(.mercuryBackdrop)')[0]).css('z-index', (1050 + 10 * (length - 1) + 1)).addClass('backdrop-'+ settings.id).addClass('mercuryBackdrop');
         
         settings.ready();
         return this;
@@ -120,13 +115,22 @@
         ready: function(){},
         hide: function(){}
     };
+    $.MercuryModal.closeLast = function(selector){
+        if(!selector || !selector.length) selector = '.modal';
+        $($(selector)[$(selector).length - 1]).modal('hide');
+    }
+
+    $('body').on('keyup', function(e){
+        if(e.keyCode == 27){
+            $($('.modal')[$('.modal').length - 1]).modal('hide');
+        }
+    });
 
     // Helpers
     $.fn.MercuryModal = function(options) {
         return this.each(function() {
             $.MercuryModal(this, options);
         });
-
     }
     $.fn.closeModal = function(){
         return this.each(function() {
