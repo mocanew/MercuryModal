@@ -9,7 +9,7 @@
         var modalIdLength = $('.'+ settings.id).length;
         var buttonsLength = $('.'+ settings.id +'-button').length;
         
-        var modalContent = '<div class="modal fade '+ settings.id +'" id="'+ settings.id +'-'+ modalIdLength +'" role="dialog" aria-labelledby="modal" aria-hidden="false" style="z-index: '+ (1050 + 10 * length) +'">';
+        var modalContent = '<div class="modal fade '+ settings.id +'" id="'+ settings.id +'-'+ modalIdLength +'" role="dialog" aria-labelledby="modal" aria-hidden="false" style="z-index: '+ (settings.zIndex + 10 * length) +'">';
         modalContent += ' <div class="modal-dialog" style="max-width: '+ settings.width +';"> <div class="modal-content">';
         if(settings.show.header) {
             modalContent += '<div class="modal-header" style="text-align: '+ settings.textAlign.header +';';
@@ -76,7 +76,7 @@
             $(this).data('bs.modal', null);
             $(this).remove();
         });
-        $($('.modal-backdrop:not(.mercuryBackdrop)')[0]).css('z-index', (1050 + 10 * (length - 1) + 1)).addClass('backdrop-'+ settings.id).addClass('mercuryBackdrop');
+        $($('.modal-backdrop:not(.mercuryBackdrop)')[0]).css('z-index', (settings.zIndex + 10 * (length - 1) + 1)).addClass('backdrop-'+ settings.id).addClass('mercuryBackdrop');
         
         settings.ready();
         return this;
@@ -109,6 +109,7 @@
             middle: 'left',
             footer: 'left'
         },
+        zIndex: 1050,
         width: '600px',
         keyboard: true,
         backdrop: true,
