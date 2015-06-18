@@ -89,12 +89,6 @@
             text: null,
             class: 'btn-default',
             dismiss: true
-        },
-        {
-            click: function(){},
-            text: null,
-            class: 'btn-danger',
-            dismiss: true
         }
         ],
         show: {
