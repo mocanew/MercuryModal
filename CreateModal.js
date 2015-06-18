@@ -97,7 +97,7 @@
             closeButton: true
         },
         title: null,
-        text: null,
+        content: null,
         textAlign: {
             header: 'left',
             middle: 'left',
