@@ -40,7 +40,7 @@ jQuery(document).ready(function($) {
     $('#introDemo').on('click', function(){
         MercuryModal({
             title: 'Intro demo',
-            text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec augue mollis, ultricies sem quis, lobortis ipsum. Maecenas et lectus vitae nunc semper molestie a sed arcu. In eu consectetur arcu. Nam venenatis tempor lectus nec molestie. Pellentesque ut aliquam ligula. Donec imperdiet tempus elit id laoreet. Ut non congue nisi. Fusce rhoncus sem ut condimentum tincidunt. Ut risus ex, faucibus tempor leo ut, semper cursus mi. Fusce tincidunt lacus in leo rutrum, sed consequat tortor efficitur. Vivamus nulla neque, sodales quis dui eu, laoreet fermentum lectus. In interdum massa ex, a congue urna sodales vitae. Nulla vehicula, ex et accumsan viverra, enim ipsum bibendum arcu, eget sodales metus arcu sit amet nunc. Phasellus scelerisque ut ante vel viverra. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.',
+            content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec augue mollis, ultricies sem quis, lobortis ipsum. Maecenas et lectus vitae nunc semper molestie a sed arcu. In eu consectetur arcu. Nam venenatis tempor lectus nec molestie. Pellentesque ut aliquam ligula. Donec imperdiet tempus elit id laoreet. Ut non congue nisi. Fusce rhoncus sem ut condimentum tincidunt. Ut risus ex, faucibus tempor leo ut, semper cursus mi. Fusce tincidunt lacus in leo rutrum, sed consequat tortor efficitur. Vivamus nulla neque, sodales quis dui eu, laoreet fermentum lectus. In interdum massa ex, a congue urna sodales vitae. Nulla vehicula, ex et accumsan viverra, enim ipsum bibendum arcu, eget sodales metus arcu sit amet nunc. Phasellus scelerisque ut ante vel viverra. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.',
             show: {
                 footer: false
             }
@@ -50,7 +50,7 @@ jQuery(document).ready(function($) {
     $('#example-text').on('click', function(){
         MercuryModal({
             title: 'Example 1',
-            text: 'Simplest modal',
+            content: 'Simplest modal',
             show: {
                 footer: false
             }
@@ -121,7 +121,7 @@ jQuery(document).ready(function($) {
         for(var i = 0; i < 10; i++){
             MercuryModal({
                 title: 'Modal #' + (numberOfModals() + 1),
-                text: 'Hint: press ESC, it\'s faster',
+                content: 'Hint: press ESC, it\'s faster',
                 textAlign: {
                     middle: 'center'
                 },

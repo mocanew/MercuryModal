@@ -2,18 +2,18 @@
     $.MercuryModal = function (elem, options){
         var settings = $.extend(true, {}, $.MercuryModal.defaults, options);
         if(elem && typeof elem == 'object'){
-            if(!settings.text) settings.text = '';
-            settings.text += $(elem).html();
+            if(!settings.content) settings.content = '';
+            settings.content += $(elem).html();
         }       
         var length = $('.modal').length;
         var modalIdLength = $('.'+ settings.id).length;
         var buttonsLength = $('.'+ settings.id +'-button').length;
         
         var modalContent = '<div class="modal fade '+ settings.id +'" id="'+ settings.id +'-'+ modalIdLength +'" role="dialog" aria-labelledby="modal" aria-hidden="false" style="z-index: '+ (settings.zIndex + 10 * length) +'">';
-        modalContent += ' <div class="modal-dialog" style="width:100%; max-width: '+ (typeof settings.width == 'number' ? (settings.width + 'px') : settings.width) +';"> <div class="modal-content">';
+        modalContent += ' <div class="modal-dialog" style="width: 100%; max-width: '+ (typeof settings.width == 'number' ? (settings.width + 'px') : settings.width) +';"> <div class="modal-content">';
         if(settings.show.header) {
             modalContent += '<div class="modal-header" style="text-align: '+ settings.textAlign.header +';';
-            if(settings.show.footer == false && !settings.text) {
+            if(settings.show.footer == false && !settings.content) {
                 modalContent += 'border-bottom: 0 solid transparent;';
             }
             modalContent += '">';
@@ -30,9 +30,9 @@
 
             modalContent += '</div>';
         }
-        if (settings.text) {
+        if (settings.content) {
             modalContent += '<div class="modal-body" style="text-align: '+ settings.textAlign.middle +'">';
-            modalContent += settings.text;
+            modalContent += settings.content;
             modalContent += '</div>';
             if(settings.show.footer) {
                 modalContent += '<div class="modal-footer" style="text-align: '+ settings.textAlign.footer +';">';
@@ -89,12 +89,6 @@
             text: null,
             class: 'btn-default',
             dismiss: true
-        },
-        {
-            click: function(){},
-            text: null,
-            class: 'btn-danger',
-            dismiss: true
         }
         ],
         show: {
@@ -103,14 +97,14 @@
             closeButton: true
         },
         title: null,
-        text: null,
+        content: null,
         textAlign: {
             header: 'left',
             middle: 'left',
             footer: 'left'
         },
         zIndex: 1050,
-        width: 600,
+        width: '600px',
         keyboard: true,
         backdrop: true,
         ready: function(){},
@@ -141,11 +135,7 @@
     window.MercuryModal = function MercuryModal(options) {
         return $.MercuryModal(null, options);
     }
-    window.closeLastModal = function CloseLastModal(selector) {
+    window.CloseLastModal = function CloseLastModal(selector) {
         return $.MercuryModal.closeLast(selector);
-    }
-    $.MercuryModal.numberOfModals = window.numberOfModals = function(selector){
-        if(!selector || !selector.length) selector = '.modal';
-        return $(selector).length;
     }
 })(jQuery);
