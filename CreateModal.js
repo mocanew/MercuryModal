@@ -138,4 +138,8 @@
     window.CloseLastModal = function CloseLastModal(selector) {
         return $.MercuryModal.closeLast(selector);
     }
+    window.numberOfModals = $.MercuryModal.numberOfModals = function (selector){
+        if(!selector || !selector.length) selector = '.modal';
+        return($(selector).length);
+    }
 })(jQuery);
