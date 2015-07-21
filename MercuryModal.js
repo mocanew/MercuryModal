@@ -112,6 +112,9 @@
     };
     $.MercuryModal.closeLast = function(selector){
         if(!selector || !selector.length) selector = '.modal';
+        if($(selector).length - 1 > 0){
+            $($(selector)[$(selector).length - 1]).modal('hide');
+        }
         $($(selector)[$(selector).length - 1]).modal('hide');
     }
 
