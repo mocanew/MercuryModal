@@ -1,16 +1,26 @@
 ;(function($) {
     $.MercuryModal = function (elem, options){
         var settings = $.extend(true, {}, $.MercuryModal.defaults, options);
+        settings.before();
         if(elem && typeof elem == 'object'){
             if(!settings.content) settings.content = '';
             settings.content += $(elem).html();
         }       
         var length = $('.modal').length;
-        var modalIdLength = $('.'+ settings.id).length;
+        var modalIdLength;
+        if($('.' + settings.id).length){
+            modalIdLength = $($('.' + settings.id)[$('.' + settings.id).length - 1]).attr('id');
+            modalIdLength = modalIdLength.substr(modalIdLength.lastIndexOf('-') + 1, modalIdLength.length);
+            modalIdLength = parseInt(modalIdLength) + 1;
+        }
+        else{
+            modalIdLength = 0;
+        }
+        length = modalIdLength;
         var buttonsLength = $('.'+ settings.id +'-button').length;
         
         var modalContent = '<div class="modal fade '+ settings.id +'" id="'+ settings.id +'-'+ modalIdLength +'" role="dialog" aria-labelledby="modal" aria-hidden="false" style="z-index: '+ (settings.zIndex + 10 * length) +'">';
-        modalContent += ' <div class="modal-dialog" style="width: 100%; max-width: '+ (typeof settings.width == 'number' ? (settings.width + 'px') : settings.width) +';"> <div class="modal-content">';
+        modalContent += ' <div class="modal-dialog" style="'+ (settings.width == 'auto' ? '' : ('width: 100%; max-width: '+ (typeof settings.width == 'number' ? (settings.width + 'px') : settings.width)) + ';') +'"> <div class="modal-content">';
         if(settings.show.header) {
             modalContent += '<div class="modal-header" style="text-align: '+ settings.textAlign.header +';';
             if(settings.show.footer == false && !settings.content) {
@@ -101,21 +111,21 @@
         textAlign: {
             header: 'left',
             middle: 'left',
-            footer: 'left'
+            footer: 'center'
         },
         zIndex: 1050,
         width: '600px',
         keyboard: true,
         backdrop: true,
         ready: function(){},
-        hide: function(){}
+        hide: function(){},
+        before: function(){}
     };
     $.MercuryModal.closeLast = function(selector){
         if(!selector || !selector.length) selector = '.modal';
         if($(selector).length - 1 > 0){
             $($(selector)[$(selector).length - 1]).modal('hide');
         }
-        $($(selector)[$(selector).length - 1]).modal('hide');
     }
 
     $('body').on('keyup', function(e){
@@ -134,6 +144,9 @@
         return this.each(function() {
             $(this).modal('hide');
         });
+    }
+    window.CloseAllModals = function(){
+        $('.modal').closeModal();
     }
     window.MercuryModal = function MercuryModal(options) {
         return $.MercuryModal(null, options);
