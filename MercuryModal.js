@@ -130,7 +130,7 @@
 
     $('body').on('keyup', function(e){
         if(e.keyCode == 27){
-            $($('.modal')[$('.modal').length - 1]).modal('hide');
+            $.MercuryModal.closeLast();
         }
     });
 
