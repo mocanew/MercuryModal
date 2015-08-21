@@ -9,7 +9,7 @@
         var length = $('.modal').length;
         var modalIdLength;
         if($('.' + settings.id).length){
-            modalIdLength = $($('.' + settings.id)[$('.' + settings.id).length - 1]).attr('id');
+            modalIdLength = $($('.modal')[length - 1]).attr('id');
             modalIdLength = modalIdLength.substr(modalIdLength.lastIndexOf('-') + 1, modalIdLength.length);
             modalIdLength = parseInt(modalIdLength) + 1;
         }
